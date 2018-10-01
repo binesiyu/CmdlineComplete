@@ -30,12 +30,36 @@ set cpo&vim
 
 " Default bindings
 
-if !hasmapto('<Plug>CmdlineCompleteBackward', 'c')
-	cmap <unique> <silent> <c-p> <Plug>CmdlineCompleteBackward
-endif
-if !hasmapto('<Plug>CmdlineCompleteForward', 'c')
-	cmap <unique> <silent> <c-n> <Plug>CmdlineCompleteForward
-endif
+"--------------------------------------------------
+" Key mappings
+"--------------------------------------------------
+noremap / :call SearchCompleteStart()<CR>/
+
+" if !hasmapto('<Plug>CmdlineCompleteBackward', 'c')
+"     cmap <unique> <silent> <c-p> <Plug>CmdlineCompleteBackward
+" endif
+" if !hasmapto('<Plug>CmdlineCompleteForward', 'c')
+"     cmap <unique> <silent> <c-n> <Plug>CmdlineCompleteForward
+" endif
+
+"--------------------------------------------------
+" Set mappings for search complete
+"--------------------------------------------------
+function! SearchCompleteStart()
+    cmap <unique> <silent> <Tab> <Plug>CmdlineCompleteBackward
+    cmap <unique> <silent> <S-Tab> <Plug>CmdlineCompleteForward
+	cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
+	cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
+endfunction
+"--------------------------------------------------
+" Remove search complete mappings
+"--------------------------------------------------
+function! SearchCompleteStop()
+	cunmap <Tab>
+	cunmap <S-Tab>
+	cunmap <CR>
+	cunmap <Esc>
+endfunction
 
 cnoremap <silent> <Plug>CmdlineCompleteBackward <c-r>=<sid>CmdlineComplete(1)<cr>
 cnoremap <silent> <Plug>CmdlineCompleteForward  <c-r>=<sid>CmdlineComplete(0)<cr>
