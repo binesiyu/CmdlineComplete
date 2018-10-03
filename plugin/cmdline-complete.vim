@@ -42,41 +42,23 @@ noremap / :call SearchCompleteStart()<CR>/
 "     cmap <unique> <silent> <c-n> <Plug>CmdlineCompleteForward
 " endif
 
-function! CmdlineComplete_CleverTab()
-    if g:cmdline_clevertab
-        return "\<Plug>CmdlineCompleteBackward"
-    else
-        return "\<Tab>"
-    endif
-endfunction
-
-function! CmdlineComplete_CleverTab_Shift()
-    if g:cmdline_clevertab
-        return "\<Plug>CmdlineCompleteForward"
-    else
-        return "\<S-Tab>"
-    endif
-endfunction
 "--------------------------------------------------
 " Set mappings for search complete
 "--------------------------------------------------
-
-set wildcharm=<Tab>
-cmap <expr> <Tab> CmdlineComplete_CleverTab()
-cmap <expr> <S-Tab> CmdlineComplete_CleverTab_Shift()
-cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
-cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
-
-let g:cmdline_clevertab = 0
-
 function! SearchCompleteStart()
-    let g:cmdline_clevertab = 1
+    cmap <unique> <silent> <Tab> <Plug>CmdlineCompleteBackward
+    cmap <unique> <silent> <S-Tab> <Plug>CmdlineCompleteForward
+	cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
+	cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
 endfunction
 "--------------------------------------------------
 " Remove search complete mappings
 "--------------------------------------------------
 function! SearchCompleteStop()
-    let g:cmdline_clevertab = 0
+	cunmap <Tab>
+	cunmap <S-Tab>
+	cunmap <CR>
+	cunmap <Esc>
 endfunction
 
 cnoremap <silent> <Plug>CmdlineCompleteBackward <c-r>=<sid>CmdlineComplete(1)<cr>
