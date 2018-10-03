@@ -60,12 +60,17 @@ endfunction
 "--------------------------------------------------
 " Set mappings for search complete
 "--------------------------------------------------
+nnoremap <silent> <Plug>SearchCompleteStop :call SearchCompleteStop()<CR>
 
 set wildcharm=<Tab>
 cmap <expr> <Tab> CmdlineComplete_CleverTab()
 cmap <expr> <S-Tab> CmdlineComplete_CleverTab_Shift()
-cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
-cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
+" cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
+" cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
+silent! cnoremap <unique><expr> <CR>
+    \ "\<CR>" . (getcmdtype() =~ '[/?]' ? "<Plug>SearchCompleteStop" : "")
+silent! cnoremap <unique><expr> <Esc>
+    \ "\<C-C>" . (getcmdtype() =~ '[/?]' ? "<Plug>SearchCompleteStop" : "")
 
 let g:cmdline_clevertab = 0
 
