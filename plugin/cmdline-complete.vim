@@ -46,8 +46,8 @@ noremap / :call SearchCompleteStart()<CR>/
 " Set mappings for search complete
 "--------------------------------------------------
 function! SearchCompleteStart()
-    cmap <unique> <silent> <Tab> <Plug>CmdlineCompleteBackward
-    cmap <unique> <silent> <S-Tab> <Plug>CmdlineCompleteForward
+    cmap <silent> <Tab> <Plug>CmdlineCompleteBackward
+    cmap <silent> <S-Tab> <Plug>CmdlineCompleteForward
 	cnoremap <silent> <CR> <CR>:call SearchCompleteStop()<CR>
 	cnoremap <silent> <Esc> <C-C>:call SearchCompleteStop()<CR>
 endfunction
